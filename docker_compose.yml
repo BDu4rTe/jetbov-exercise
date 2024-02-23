@@ -1,0 +1,15 @@
+version: "3.8"
+
+name: jetvbov-exercise
+
+services:
+  database:
+    image: postgres
+    container_name: jetbov_exercise_database
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=jetbov
+      - POSTGRES_PASSWORD=jetbov
+      - POSTGRES_DB=jetbov
