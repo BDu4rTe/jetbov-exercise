@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface AreaRepositoryService {
     public void createArea(Area entity);
-    public Area getById(UUID id) throws Exception;
+    public Area getById(UUID id);
     public List<Area> getAllAreas();
     public void updateArea(UUID id, Area entity);
     public void deleteArea(UUID id);

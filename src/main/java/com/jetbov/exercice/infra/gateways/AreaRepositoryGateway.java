@@ -1,15 +1,16 @@
-package com.jetbov.exercice.infra.repositories;
+package com.jetbov.exercice.infra.gateways;
 
-import com.jetbov.exercice.adapters.AreaRepositoryService;
+import com.jetbov.exercice.adapters.AreaGateway;
 import com.jetbov.exercice.core.entities.Area;
 import com.jetbov.exercice.infra.models.AreaModel;
+import com.jetbov.exercice.infra.repositories.AreaRepository;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
-public class AreaRepositoryServiceImpl  implements AreaRepositoryService {
+public class AreaRepositoryServiceImpl  implements AreaGateway {
     private final AreaRepository repository;
 
     @Override
@@ -20,8 +21,9 @@ public class AreaRepositoryServiceImpl  implements AreaRepositoryService {
     }
 
     @Override
-    public Area getById(UUID id) throws Exception {
-        return null;
+    public Area getById(UUID id) {
+        var search = repository.findById(id);
+
     }
 
     @Override
