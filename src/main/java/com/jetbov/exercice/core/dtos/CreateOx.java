@@ -1,7 +1,7 @@
-package com.jetbov.exercice.core.entities;
+package com.jetbov.exercice.core.dtos;
 
 public record CreateOx(
         String earring,
-        double initialHeight
+        float initialHeight
 ) {
 }

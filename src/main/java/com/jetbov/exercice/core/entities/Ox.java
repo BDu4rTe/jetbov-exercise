@@ -6,6 +6,6 @@ import lombok.NoArgsConstructor;
 
 public record Ox(
         String earring,
-        double height,
-        double initialHeight
+        float height,
+        float initialHeight
 ) {}

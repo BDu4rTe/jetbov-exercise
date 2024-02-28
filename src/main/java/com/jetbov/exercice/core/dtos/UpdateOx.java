@@ -1,8 +1,8 @@
-package com.jetbov.exercice.core.entities;
+package com.jetbov.exercice.core.dtos;
 
 public record UpdateOx(
         String earring,
-        double height
+        float height
 ) {
 
 }

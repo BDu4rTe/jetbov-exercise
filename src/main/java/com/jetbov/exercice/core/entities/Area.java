@@ -2,6 +2,6 @@ package com.jetbov.exercice.core.entities;
 
 public record Area(
         String name,
-        double gmd,
+        float gmd,
         int maxCapacity
 ) {}

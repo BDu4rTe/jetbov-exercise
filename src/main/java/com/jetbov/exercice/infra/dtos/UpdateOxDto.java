@@ -1,6 +1,6 @@
 package com.jetbov.exercice.infra.dtos;
 
-import com.jetbov.exercice.core.entities.UpdateOx;
+import com.jetbov.exercice.core.dtos.UpdateOx;
 
 public record UpdateOxDto(
         String earring,

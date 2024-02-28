@@ -1,13 +1,13 @@
 package com.jetbov.exercice.infra.dtos;
 
-import com.jetbov.exercice.core.entities.Area;
+import com.jetbov.exercice.core.dtos.UpdateArea;
 
 public record UpdateAreaDto(
         String name,
-        double gmd,
+        float gmd,
         int maxCapacity
 ) {
-    public Area toEntity() {
-        return new Area(this.name, this.gmd, this.maxCapacity);
+    public UpdateArea toDomainRecord() {
+        return new UpdateArea(this.name, this.gmd, this.maxCapacity);
     }
 }

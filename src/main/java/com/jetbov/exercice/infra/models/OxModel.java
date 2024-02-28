@@ -1,14 +1,17 @@
 package com.jetbov.exercice.infra.models;
 
+import com.jetbov.exercice.core.dtos.CreateOx;
 import com.jetbov.exercice.core.entities.Ox;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.UUID;
 
 @Table(name = "OXES")
 public class OxModel implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -19,9 +22,9 @@ public class OxModel implements Serializable {
     private String earring;
 
     @Column(nullable = false)
-    private double initialHeight;
+    private float initialHeight;
 
-    private double height;
+    private float height;
 
     public Ox toEntity() {
         return new Ox(this.earring, this.height, this.initialHeight);
@@ -31,5 +34,11 @@ public class OxModel implements Serializable {
         this.earring = entity.earring();
         this.height = entity.height();
         this.initialHeight = entity.initialHeight();
+    }
+
+    public void fromCreateDto(CreateOx dto){
+        this.earring = dto.earring();
+        this.initialHeight = dto.initialHeight();
+        this.height = dto.initialHeight();
     }
 }
