@@ -1,41 +1,52 @@
 package com.jetbov.exercice.infra.gateways;
 
 import com.jetbov.exercice.adapters.OxGateway;
-import com.jetbov.exercice.core.entities.CreateOx;
+import com.jetbov.exercice.core.dtos.CreateOx;
 import com.jetbov.exercice.core.entities.Ox;
-import com.jetbov.exercice.core.entities.UpdateOx;
+import com.jetbov.exercice.core.dtos.UpdateOx;
+import com.jetbov.exercice.core.exceptions.EntityNotFound;
+import com.jetbov.exercice.infra.GatewayHelper;
+import com.jetbov.exercice.infra.models.OxModel;
 import com.jetbov.exercice.infra.repositories.OxRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
 
 import java.util.List;
 import java.util.UUID;
 
-public class OxRepositoryServiceImpl implements OxGateway {
-    @Autowired
-    OxRepository repository;
+@AllArgsConstructor
+public class OxRepositoryGateway implements OxGateway {
+    private final OxRepository repository;
+    private final GatewayHelper helper;
 
     @Override
-    public void createOx(CreateOx entity) {
-
+    public void createOx(CreateOx dto) {
+        var oxModel = new OxModel();
+        oxModel.fromCreateDto(dto);
+        repository.save(oxModel);
     }
 
     @Override
     public Ox getById(UUID id) {
-        return null;
+        return repository.findById(id).map(OxModel::toEntity).orElseThrow(EntityNotFound::new);
     }
 
     @Override
     public List<Ox> getAll() {
-        return null;
+        return repository.findAll().stream().map(OxModel::toEntity).toList();
     }
 
     @Override
     public void update(UUID id, UpdateOx dto) {
-        var oldOx = repository.findById(id).orElseThrow();
+        var oxModel = repository.findById(id).orElseThrow(EntityNotFound::new);
+        BeanUtils.copyProperties(oxModel, dto, helper.getNullPropertyNames(dto));
+        repository.save(oxModel);
     }
 
     @Override
     public void delete(UUID id) {
+        repository.findById(id).orElseThrow(EntityNotFound::new);
+        repository.deleteById(id);
 
     }
 }
