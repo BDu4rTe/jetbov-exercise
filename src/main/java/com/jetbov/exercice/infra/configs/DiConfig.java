@@ -1,4 +1,4 @@
-package com.jetbov.exercice.infra;
+package com.jetbov.exercice.infra.configs;
 
 import com.jetbov.exercice.adapters.AreaGateway;
 import com.jetbov.exercice.adapters.OxGateway;

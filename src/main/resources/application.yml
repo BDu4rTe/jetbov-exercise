@@ -1,29 +1,28 @@
 spring:
-  profile:
-    active: dev
-    datasource:
-      driver-class-name: org.postgresql.Driver
-      url: jdbc:postgresql://${DB_HOST}/${DB_PORT}/${DB_NAME}
-      username: ${DB_USER}
-      password: ${DB_PASSWORD}
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
 
-    jpa:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+    properties:
       hibernate:
-        ddl-auto: create-drop
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    format-sql: false
+    defer-database-initialization: true
 
-      properties:
-        hibernate:
-          dialect: org.hibernate.dialect.PostgresSQLDialect
-      show-sql: true
-      format-sql: false
-      defer-database-initialization: true
+  slq:
+    init.mode: always
 
-    slq:
-      init.mode: always
-
-    spring-doc:
-      swagger-ui:
-        try-it-out-enable: true
-        operations-sorter: method
-        tags-sorter: alpha
-        filter: true
+  spring-doc:
+    swagger-ui:
+      try-it-out-enable: true
+      operations-sorter: method
+      tags-sorter: alpha
+      filter: false
+    show-actuator: true

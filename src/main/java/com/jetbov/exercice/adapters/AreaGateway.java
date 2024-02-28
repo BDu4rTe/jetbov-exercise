@@ -9,8 +9,12 @@ import java.util.UUID;
 
 public interface AreaGateway {
     void createArea(CreateArea dto);
-    Area getById(UUID id);
+
+    Area getAreaById(UUID id);
+
     List<Area> getAllAreas();
+
     void updateArea(UUID id, UpdateArea dto);
+
     void deleteArea(UUID id);
 }

@@ -17,7 +17,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AreaRepositoryGateway implements AreaGateway {
     private final AreaRepository repository;
-    private final GatewayHelper helper;
 
     @Override
     public void createArea(CreateArea dto) {
@@ -27,7 +26,7 @@ public class AreaRepositoryGateway implements AreaGateway {
     }
 
     @Override
-    public Area getById(UUID id) {
+    public Area getAreaById(UUID id) {
         var search = repository.findById(id);
         return search.map(AreaModel::toEntity).orElseThrow(EntityNotFound::new);
     }
@@ -40,7 +39,7 @@ public class AreaRepositoryGateway implements AreaGateway {
     @Override
     public void updateArea(UUID id, UpdateArea dto) {
         var areaModel = repository.findById(id).orElseThrow(EntityNotFound::new);
-        BeanUtils.copyProperties(dto, areaModel, helper.getNullPropertyNames(dto));
+        BeanUtils.copyProperties(dto, areaModel, GatewayHelper.getNullPropertyNames(dto));
         repository.save(areaModel);
     }
 

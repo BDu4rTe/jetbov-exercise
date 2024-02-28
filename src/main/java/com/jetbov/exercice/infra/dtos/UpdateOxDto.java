@@ -4,9 +4,9 @@ import com.jetbov.exercice.core.dtos.UpdateOx;
 
 public record UpdateOxDto(
         String earring,
-        double height
+        float height
 ) {
-    public UpdateOx toDomainRecord(){
+    public UpdateOx toDomainRecord() {
         return new UpdateOx(this.earring, this.height);
     }
 }

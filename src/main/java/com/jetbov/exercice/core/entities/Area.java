@@ -4,4 +4,5 @@ public record Area(
         String name,
         float gmd,
         int maxCapacity
-) {}
+) {
+}

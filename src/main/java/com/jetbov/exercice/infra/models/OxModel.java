@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Table(name = "OXES")
+@Entity
 public class OxModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -36,7 +37,7 @@ public class OxModel implements Serializable {
         this.initialHeight = entity.initialHeight();
     }
 
-    public void fromCreateDto(CreateOx dto){
+    public void fromCreateDto(CreateOx dto) {
         this.earring = dto.earring();
         this.initialHeight = dto.initialHeight();
         this.height = dto.initialHeight();

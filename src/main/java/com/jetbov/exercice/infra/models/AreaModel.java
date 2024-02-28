@@ -9,7 +9,8 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.UUID;
 
-@Table(name="AREAS")
+@Table(name = "AREAS")
+@Entity
 public class AreaModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -34,9 +35,9 @@ public class AreaModel implements Serializable {
         this.maxCapacity = entity.maxCapacity();
     }
 
-    public void fromCreateDto(@NotNull CreateArea dto){
-       this.name = dto.name();
-       this.gmd = dto.gmd();
-       this.maxCapacity = dto.maxCapacity();
+    public void fromCreateDto(@NotNull CreateArea dto) {
+        this.name = dto.name();
+        this.gmd = dto.gmd();
+        this.maxCapacity = dto.maxCapacity();
     }
 }
