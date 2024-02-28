@@ -17,8 +17,8 @@ import org.springframework.context.annotation.Configuration;
 public class DiConfig {
 
     @Bean
-    AreaGateway areaGateway(AreaRepository repository, GatewayHelper helper) {
-        return new AreaRepositoryGateway(repository, helper);
+    AreaGateway areaGateway(AreaRepository repository) {
+        return new AreaRepositoryGateway(repository);
     }
 
     @Bean
@@ -27,8 +27,8 @@ public class DiConfig {
     }
 
     @Bean
-    OxGateway oxGateway(OxRepository repository, GatewayHelper helper) {
-        return new OxRepositoryGateway(repository, helper);
+    OxGateway oxGateway(OxRepository repository) {
+        return new OxRepositoryGateway(repository);
     }
 
     @Bean
