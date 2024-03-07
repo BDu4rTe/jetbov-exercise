@@ -1,4 +1,4 @@
-package com.jetbov.exercice.infra;
+package com.jetbov.exercice.infra.gateways;
 
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanWrapper;
