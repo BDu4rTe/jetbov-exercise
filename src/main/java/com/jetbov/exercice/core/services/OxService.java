@@ -4,6 +4,7 @@ import com.jetbov.exercice.core.dtos.CreateOx;
 import com.jetbov.exercice.core.dtos.MoveOx;
 import com.jetbov.exercice.core.entities.Ox;
 import com.jetbov.exercice.core.dtos.UpdateOx;
+import com.jetbov.exercice.infra.dtos.MoveOxDto;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,7 +16,7 @@ public interface OxService {
 
     void create(CreateOx dto);
 
-    void move(UUID oxId, MoveOx data);
+    void move(UUID oxId, MoveOxDto dto);
 
     void update(UUID id, UpdateOx dto);
 

@@ -1,0 +1,63 @@
+INSERT INTO oxes(id, earring, initial_weight, weight) VALUES
+(
+    'd71cf8a7-09d5-4332-adb0-dea0bd02e9e0',
+    'ox1',
+    100.0,
+    100.0
+),
+(
+    'b96afd24-9269-4959-a927-1095ed9da61f',
+    'ox2',
+    125.5,
+    125.5
+),
+(
+    'd17f6601-635c-4fe5-846b-9d90845fa095',
+    'ox3',
+    233.0,
+    233.0
+),
+(
+    '44f67c3d-8846-436e-ba83-e48f87d52113',
+    'ox4',
+    140.0,
+    140.0
+),
+(
+    '6f33e4b4-9e53-40a0-bf69-36b7d1aa57b4',
+    'ox5',
+    432.3,
+    432.3
+),
+(
+    'a27bc2f3-9dbf-41b9-978e-bcbbd2295abe',
+    'ox6',
+    325.2,
+    325.2
+),
+(
+    '8e080f3f-7656-4cf0-ba35-fe48c8da7fcc',
+    'ox7',
+    500.0,
+    500.0
+),
+(
+    'd773e708-fc7a-438a-9ef9-d96607171fc6',
+    'ox8',
+    543.2,
+    543.2
+);
+
+INSERT INTO areas(id, name, gmd, max_capacity) VALUES
+(
+    '61c54de6-d9cf-46f1-a226-89a7520ad767',
+    'area1',
+    5.5,
+    3
+),
+(
+    '2a140f2f-c829-40b7-8d41-6650c3f91d0c',
+    'area2',
+    2.2,
+    5
+);

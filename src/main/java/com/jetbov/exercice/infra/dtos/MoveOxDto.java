@@ -6,8 +6,8 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
-public record MoveOxDto(@NotBlank UUID areaId, @NotNull int days_amount) {
+public record MoveOxDto(@NotBlank UUID areaId, @NotNull int allocatedPeriod) {
     public MoveOx toDomainRecord() {
-        return new MoveOx(this.areaId(), this.days_amount());
+        return new MoveOx(this.areaId(), this.allocatedPeriod());
     }
 }

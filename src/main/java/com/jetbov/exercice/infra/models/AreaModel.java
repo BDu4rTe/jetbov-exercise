@@ -4,11 +4,16 @@ import com.jetbov.exercice.core.dtos.CreateArea;
 import com.jetbov.exercice.core.entities.Area;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Set;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Table(name = "AREAS")
 @Entity
 public class AreaModel implements Serializable {
@@ -19,23 +24,23 @@ public class AreaModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
+    @Column(nullable = false)
     private float gmd;
+
+    @Column(nullable = false)
     private int maxCapacity;
 
+    @OneToMany(mappedBy = "currentArea")
+    Set<OxModel> oxesOnArea;
+
     public Area toEntity() {
-        return new Area(this.name, this.gmd, this.maxCapacity);
+        return new Area(this.id, this.name, this.gmd, this.maxCapacity);
     }
 
-    public void fromEntity(@NotNull Area entity) {
-        this.name = entity.name();
-        this.gmd = entity.gmd();
-        this.maxCapacity = entity.maxCapacity();
-    }
-
-    public void fromCreateDto(@NotNull CreateArea dto) {
+    public void fromCreateDto(CreateArea dto) {
         this.name = dto.name();
         this.gmd = dto.gmd();
         this.maxCapacity = dto.maxCapacity();

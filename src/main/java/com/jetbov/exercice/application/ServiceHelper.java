@@ -1,4 +1,4 @@
-package com.jetbov.exercice.infra.gateways;
+package com.jetbov.exercice.application;
 
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanWrapper;
@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @NoArgsConstructor
-public class GatewayHelper {
+public class ServiceHelper {
     public static String[] getNullPropertyNames(Object obj) {
         BeanWrapper source = new BeanWrapperImpl(obj);
         PropertyDescriptor[] descriptors = source.getPropertyDescriptors();

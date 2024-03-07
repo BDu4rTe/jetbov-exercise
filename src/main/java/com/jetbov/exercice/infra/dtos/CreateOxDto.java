@@ -5,9 +5,9 @@ import jakarta.validation.constraints.NotNull;
 
 public record CreateOxDto(
         @NotNull String earring,
-        @NotNull float initialHeight
+        @NotNull float initialWeight
 ) {
     public CreateOx toEntity() {
-        return new CreateOx(this.earring, this.initialHeight);
+        return new CreateOx(this.earring, this.initialWeight);
     }
 }

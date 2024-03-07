@@ -2,7 +2,7 @@ package com.jetbov.exercice.core.dtos;
 
 public record UpdateOx(
         String earring,
-        float height
+        float weight
 ) {
 
 }

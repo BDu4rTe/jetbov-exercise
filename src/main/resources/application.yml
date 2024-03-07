@@ -12,9 +12,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
     show-sql: true
     format-sql: false
-    defer-database-initialization: true
+    defer-datasource-initialization: true
 
   slq:
     init.mode: always
@@ -24,5 +25,7 @@ spring:
       try-it-out-enable: true
       operations-sorter: method
       tags-sorter: alpha
-      filter: false
+      filter: true
     show-actuator: true
+    api-docs:
+      enable: true

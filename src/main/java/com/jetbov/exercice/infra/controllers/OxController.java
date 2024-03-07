@@ -4,6 +4,7 @@ import com.jetbov.exercice.application.OxServiceImpl;
 import com.jetbov.exercice.core.entities.Ox;
 import com.jetbov.exercice.core.services.OxService;
 import com.jetbov.exercice.infra.dtos.CreateOxDto;
+import com.jetbov.exercice.infra.dtos.MoveOxDto;
 import com.jetbov.exercice.infra.dtos.UpdateOxDto;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("oxes")
+@RequestMapping(value = "/oxes", produces = {"application/json"})
 public class OxController {
     @Autowired
     OxService service;
@@ -39,7 +40,8 @@ public class OxController {
     }
 
     @PostMapping(value = "/{id}/move")
-    public ResponseEntity<Void> moveOx(@PathVariable(name = "id") UUID id) {
+    public ResponseEntity<Void> moveOx(@PathVariable(name = "id") UUID id, @RequestBody MoveOxDto dto) {
+        service.move(id, dto);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 

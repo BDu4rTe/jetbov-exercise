@@ -1,6 +1,5 @@
 package com.jetbov.exercice.infra.controllers;
 
-import com.jetbov.exercice.application.AreaServiceImpl;
 import com.jetbov.exercice.core.entities.Area;
 import com.jetbov.exercice.core.services.AreaService;
 import com.jetbov.exercice.infra.dtos.CreateAreaDto;
@@ -15,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("areas")
+@RequestMapping(value = "/areas", produces = {"application/json"})
 public class AreaController {
     @Autowired
     AreaService service;
