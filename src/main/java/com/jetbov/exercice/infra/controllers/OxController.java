@@ -1,13 +1,14 @@
 package com.jetbov.exercice.infra.controllers;
 
-import com.jetbov.exercice.application.OxServiceImpl;
 import com.jetbov.exercice.core.entities.Ox;
 import com.jetbov.exercice.core.services.OxService;
 import com.jetbov.exercice.infra.dtos.CreateOxDto;
 import com.jetbov.exercice.infra.dtos.MoveOxDto;
 import com.jetbov.exercice.infra.dtos.UpdateOxDto;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,9 +23,18 @@ public class OxController {
     OxService service;
 
     @GetMapping(value = "/")
-    public ResponseEntity<List<Ox>> getAllOxes() {
-        var oxes = service.getAll();
-        return ResponseEntity.status(HttpStatus.OK).body(oxes);
+    public ResponseEntity<List<Ox>> getAllOxes(
+            @Parameter(description = "desired page number")
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @Parameter(description = "number of items per page")
+            @RequestParam(required = false, defaultValue = "10") int size
+    ) {
+        var pageable = PageRequest.of(page, size);
+        var oxes = service.getAll(pageable);
+
+        return oxes.isEmpty()
+                ? ResponseEntity.status(HttpStatus.NO_CONTENT).body(null)
+                : ResponseEntity.status(HttpStatus.OK).body(oxes);
     }
 
     @GetMapping(value = "/{id}")
@@ -42,7 +52,7 @@ public class OxController {
     @PostMapping(value = "/{id}/move")
     public ResponseEntity<Void> moveOx(@PathVariable(name = "id") UUID id, @RequestBody MoveOxDto dto) {
         service.move(id, dto);
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
     @PutMapping(value = "/{id}")
