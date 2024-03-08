@@ -9,6 +9,7 @@ import com.jetbov.exercice.infra.models.AreaModel;
 import com.jetbov.exercice.infra.repositories.AreaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,17 +19,9 @@ public class AreaServiceImpl implements AreaService {
     private final AreaRepository areaRepository;
 
     @Override
-    public void create(CreateArea dto) {
-        var areaModel = new AreaModel();
-        areaModel.fromCreateDto(dto);
-
-        areaRepository.save(areaModel);
-    }
-
-    @Override
-    public List<Area> getAll() {
-        var areaModels = areaRepository.findAll();
-        return areaModels.stream().map(AreaModel::toEntity).toList();
+    public List<Area> getAll(Pageable pageable) {
+        var pageContent = areaRepository.findAll(pageable);
+        return pageContent.stream().map(AreaModel::toEntity).toList();
     }
 
     @Override
@@ -36,6 +29,13 @@ public class AreaServiceImpl implements AreaService {
         return areaRepository.findById(id).map(AreaModel::toEntity).orElseThrow(EntityNotFound::new);
     }
 
+    @Override
+    public void create(CreateArea dto) {
+        var areaModel = new AreaModel();
+        areaModel.fromCreateDto(dto);
+
+        areaRepository.save(areaModel);
+    }
     @Override
     public void update(UUID id, UpdateArea dto) {
         var areaModel = areaRepository.findById(id).orElseThrow(EntityNotFound::new);

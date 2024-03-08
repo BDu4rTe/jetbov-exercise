@@ -13,6 +13,8 @@ import com.jetbov.exercice.infra.repositories.MoveRepository;
 import com.jetbov.exercice.infra.repositories.OxRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
@@ -24,8 +26,9 @@ public class OxServiceImpl implements OxService {
     private final MoveRepository moveRepository;
 
     @Override
-    public List<Ox> getAll() {
-        return oxRepository.findAll().stream().map(OxModel::toEntity).toList();
+    public List<Ox> getAll(Pageable pageable) {
+        var pageContent = oxRepository.findAll(pageable).getContent();
+        return pageContent.stream().map(OxModel::toEntity).toList();
     }
 
     @Override
