@@ -17,8 +17,15 @@ spring:
     format-sql: false
     defer-datasource-initialization: true
 
-  slq:
+  sql:
     init.mode: always
+
+  devtools:
+    restart:
+      enable: true
+
+    livereload:
+      enable: true
 
   spring-doc:
     swagger-ui:

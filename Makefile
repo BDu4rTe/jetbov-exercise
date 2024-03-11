@@ -7,7 +7,7 @@ default: run
 
 run:
 	@echo "Runing the application..."
-	@gradle bootRun
+	@gradlew bootRun
 
 up:
 	@echo "Up containers..."

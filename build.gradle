@@ -26,10 +26,35 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+	implementation 'org.springframework.boot:spring-boot-starter'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.register('loadEnvFile') {
+	doLast {
+		File envFile = project.rootDir.toPath().resolve('.env').toFile()
+		if (envFile.exists()) {
+			envFile.readLines().each { line ->
+				def (key, value) = line.split('=')
+				System.setProperty(key, value)
+			}
+		}
+	}
+}
+
+tasks.register('runApplication', JavaExec) {
+	dependsOn 'loadEnvFile'
+	classpath = sourceSets.main.runtimeClasspath
+	mainClass = 'com.jetbov.exercise.JetbovExerciseApplication'
+}
+
+tasks.register('dockerComposeUp', Exec) {
+	dependsOn 'loadEnvFile'
+	commandLine 'docker-compose', 'up', '-d'
 }
 
 tasks.named('test') {
