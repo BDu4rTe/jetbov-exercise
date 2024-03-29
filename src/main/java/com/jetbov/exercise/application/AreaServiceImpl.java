@@ -3,12 +3,14 @@ package com.jetbov.exercise.application;
 import com.jetbov.exercise.core.dtos.CreateArea;
 import com.jetbov.exercise.core.dtos.UpdateArea;
 import com.jetbov.exercise.core.entities.Area;
+import com.jetbov.exercise.core.exceptions.CopyFromDto;
 import com.jetbov.exercise.core.exceptions.EntityNotFound;
 import com.jetbov.exercise.core.services.AreaService;
 import com.jetbov.exercise.infra.models.AreaModel;
 import com.jetbov.exercise.infra.repositories.AreaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeansException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -37,19 +39,28 @@ public class AreaServiceImpl implements AreaService {
         areaModel.fromCreateDto(dto);
         areaRepository.save(areaModel);
     }
+
     @Override
     public void update(UUID id, UpdateArea dto) {
         var areaModel = areaRepository.findById(id).orElseThrow(
-                () -> new EntityNotFound(Area.class,"id", id)
+                () -> new EntityNotFound(Area.class, "id", id)
         );
-        BeanUtils.copyProperties(areaModel, dto, ServiceHelper.getNullPropertyNames(dto));
+        copyFromDto(areaModel, dto);
         areaRepository.save(areaModel);
     }
 
     @Override
     public void delete(UUID id) {
-        if (areaRepository.existsById(id)){
+        if (areaRepository.existsById(id)) {
             areaRepository.deleteById(id);
+        }
+    }
+
+    private void copyFromDto(AreaModel model, UpdateArea dto) {
+        try {
+            BeanUtils.copyProperties(dto, model, ServiceHelper.getNullPropertyNames(dto));
+        } catch (BeansException err) {
+            throw new CopyFromDto(Area.class, UpdateArea.class, err);
         }
     }
 

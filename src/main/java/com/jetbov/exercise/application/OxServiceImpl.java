@@ -3,12 +3,14 @@ package com.jetbov.exercise.application;
 import com.jetbov.exercise.core.dtos.CreateOx;
 import com.jetbov.exercise.core.entities.Ox;
 import com.jetbov.exercise.core.dtos.UpdateOx;
+import com.jetbov.exercise.core.exceptions.CopyFromDto;
 import com.jetbov.exercise.core.exceptions.EntityNotFound;
 import com.jetbov.exercise.core.services.OxService;
 import com.jetbov.exercise.infra.models.OxModel;
 import com.jetbov.exercise.infra.repositories.OxRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeansException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -45,7 +47,7 @@ public class OxServiceImpl implements OxService {
         var oxModel = oxRepository.findById(id).orElseThrow(
                 () -> new EntityNotFound(Ox.class, "id", id)
         );
-        BeanUtils.copyProperties(oxModel, dto, ServiceHelper.getNullPropertyNames(dto));
+        copyFromDto(oxModel, dto);
         oxRepository.save(oxModel);
     }
 
@@ -53,6 +55,14 @@ public class OxServiceImpl implements OxService {
     public void delete(UUID id) {
         if (oxRepository.existsById(id)) {
             oxRepository.deleteById(id);
+        }
+    }
+
+    private void copyFromDto(OxModel model, UpdateOx dto) {
+        try {
+            BeanUtils.copyProperties(dto, model, ServiceHelper.getNullPropertyNames(dto));
+        } catch (BeansException err) {
+            throw new CopyFromDto(Ox.class, UpdateOx.class, err);
         }
     }
 }

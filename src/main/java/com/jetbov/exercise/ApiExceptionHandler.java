@@ -1,5 +1,6 @@
 package com.jetbov.exercise;
 
+import com.jetbov.exercise.core.exceptions.CopyFromDto;
 import com.jetbov.exercise.core.exceptions.CrowdedArea;
 import com.jetbov.exercise.core.exceptions.EntityNotFound;
 import com.jetbov.exercise.infra.errors.ApiError;
@@ -170,6 +171,12 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(CrowdedArea.class)
     protected ResponseEntity<Object> handleCrowdedArea(CrowdedArea exception) {
         var apiError = new ApiError(HttpStatus.CONFLICT, exception.getMessage(), exception.getCause());
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(CopyFromDto.class)
+    protected ResponseEntity<Object> handleCopyFromDto(CopyFromDto exception) {
+        var apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage(), exception.getCause());
         return buildResponseEntity(apiError);
     }
 }
