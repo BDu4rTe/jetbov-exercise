@@ -11,7 +11,6 @@ import java.util.UUID;
 
 @Getter
 @Setter
-//@Builder
 @Table(name = "MOVES")
 @Entity
 public class MoveModel implements Serializable {
