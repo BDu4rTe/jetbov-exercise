@@ -25,7 +25,9 @@ public class OxServiceImpl implements OxService {
 
     @Override
     public Ox getById(UUID id) {
-        var ox = oxRepository.findById(id).orElseThrow(EntityNotFound::new);
+        var ox = oxRepository.findById(id).orElseThrow(
+                () -> new EntityNotFound(Ox.class, "id", id)
+        );
         return ox.toEntity();
     }
 
@@ -40,7 +42,9 @@ public class OxServiceImpl implements OxService {
 
     @Override
     public void update(UUID id, UpdateOx dto) {
-        var oxModel = oxRepository.findById(id).orElseThrow(EntityNotFound::new);
+        var oxModel = oxRepository.findById(id).orElseThrow(
+                () -> new EntityNotFound(Ox.class, "id", id)
+        );
         BeanUtils.copyProperties(oxModel, dto, ServiceHelper.getNullPropertyNames(dto));
         oxRepository.save(oxModel);
     }

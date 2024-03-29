@@ -25,19 +25,23 @@ public class AreaServiceImpl implements AreaService {
 
     @Override
     public Area getById(UUID id) {
-        return areaRepository.findById(id).map(AreaModel::toEntity).orElseThrow(EntityNotFound::new);
+        return areaRepository.findById(id).map(AreaModel::toEntity).orElseThrow(
+                () -> new EntityNotFound(Area.class, "id", id)
+        );
     }
 
     @Override
     public void create(CreateArea dto) {
         var areaModel = new AreaModel();
-        areaModel.fromCreateDto(dto);
 
+        areaModel.fromCreateDto(dto);
         areaRepository.save(areaModel);
     }
     @Override
     public void update(UUID id, UpdateArea dto) {
-        var areaModel = areaRepository.findById(id).orElseThrow(EntityNotFound::new);
+        var areaModel = areaRepository.findById(id).orElseThrow(
+                () -> new EntityNotFound(Area.class,"id", id)
+        );
         BeanUtils.copyProperties(areaModel, dto, ServiceHelper.getNullPropertyNames(dto));
         areaRepository.save(areaModel);
     }
@@ -48,4 +52,5 @@ public class AreaServiceImpl implements AreaService {
             areaRepository.deleteById(id);
         }
     }
+
 }

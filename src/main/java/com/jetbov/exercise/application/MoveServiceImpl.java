@@ -1,7 +1,11 @@
 package com.jetbov.exercise.application;
 
+import com.jetbov.exercise.core.entities.Area;
 import com.jetbov.exercise.core.entities.Move;
+import com.jetbov.exercise.core.entities.Ox;
+import com.jetbov.exercise.core.exceptions.CrowdedArea;
 import com.jetbov.exercise.core.exceptions.EntityNotFound;
+import com.jetbov.exercise.core.exceptions.OxAlreadyInArea;
 import com.jetbov.exercise.core.services.MoveService;
 import com.jetbov.exercise.infra.dtos.CreateMoveRequest;
 import com.jetbov.exercise.infra.dtos.MoveFilter;
@@ -41,12 +45,18 @@ public class MoveServiceImpl implements MoveService {
 
     @Override
     public void moveOx(UUID oxId, CreateMoveRequest data) {
-        var ox = oxRepository.findById(oxId).orElseThrow(EntityNotFound::new);
-        var area = areaRepository.findById(data.areaId()).orElseThrow(EntityNotFound::new);
+        var ox = oxRepository.findById(oxId).orElseThrow(
+                () -> new EntityNotFound(Ox.class, "id", oxId)
+        );
+        var area = areaRepository.findById(data.areaId()).orElseThrow(
+                () -> new EntityNotFound(Area.class, "id", data.areaId())
+        );
 
         if (area.getOxesOnArea().contains(ox)) {
-            System.out.println("boi já esta na area.");
-            return;
+            throw new OxAlreadyInArea(
+                    Ox.class,
+                    "already in area.",
+                    "OxInArea", area.getOxesOnArea());
         }
 
         var oxesOnArea = moveRepository.countByAreaName(area.getName());
@@ -70,7 +80,12 @@ public class MoveServiceImpl implements MoveService {
 
             moveRepository.save(move);
         } else {
-            System.out.println("Area lotada");
+            throw new CrowdedArea(
+                    Area.class,
+                    "area is at maximum capacity, choose another area.",
+                    "areaCapacity", area.getMaxCapacity()
+            );
+            // add hateos to getAllAreas
         }
 
 
